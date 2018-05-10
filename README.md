@@ -2,7 +2,7 @@
 构建基于jwt的apigateway; 实现资源访问的控制。 利用express-http-proxy来自动proxy到内部资源服务。 (内部资源服务没有任何的访问限制，不能直接暴露给外部APP访问)
 这里的用户资源也来源于内部资源服务。
 # 测试API
-## POST Request for an token
+## 授权后去token
 URL: http://localhost:3000/auth/authenticate
 POST-Body:
 ```
@@ -34,7 +34,7 @@ Sample of Response:
 }
 ```
 
-## Request to Resource
+## 获取资源信息
 Token in the header:
 ```
 chem-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA0LCJ1c2VyRW1haWwiOiJqb2UubGlAb2tjaGVtLmNvbSIsInVzZXJSb2xlIjoiQlVZRVIiLCJ1c2VyU3RhdHVzIjoiQUNUSVZFIiwidXNlclByb2ZpbGUiOnsiZmlyc3ROYW1lIjoiam9lIiwibGFzdE5hbWUiOiJsaSIsImNvbXBhbnlOYW1lIjoibHkiLCJjb3VudHJ5IjoiQ0hOIiwidGVscGhvbmUiOiI4NjE4MDg2MDY4MTMzIn0sImlhdCI6MTUyNTg0NjA2NCwiZXhwIjoxNTI1OTMyNDY0fQ.hIQFv71SHMX2Vd5RPD8ir08LIVeaveZEoN-DQdkxcj0
