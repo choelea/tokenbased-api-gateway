@@ -14,7 +14,8 @@ const myProxy = proxy(config.resourceServer, {
   },
   proxyReqOptDecorator: (proxyReqOpts, srcReq) => {
     // you can update headers
-    proxyReqOpts.headers['chembnb_user_id'] = srcReq.user ? `${srcReq.user.accountId}` : ''
+    console.log(srcReq.user)
+    proxyReqOpts.headers['chembnb_user_id'] = srcReq.user ? `${srcReq.user.id}` : ''
     return proxyReqOpts
   },
 })

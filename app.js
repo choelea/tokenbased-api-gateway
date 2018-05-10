@@ -23,11 +23,12 @@ app.use((req, res, next) => { // Just do one thing: check token in the header; i
     jwt.verify(chemToken, config.tokenSecret, function (err, userData) {
       if (!err) {
         req.user = userData;
-        next();
       }
+      next();
     });
-  }
-  next()
+  }else{
+    next()
+  }  
 });
 
 
