@@ -15,8 +15,7 @@ router.post('/authenticate', function(req, res) {
     .then(function (resData) {
         const tokenUser = JSON.parse(resData)        
         tokenUser.chemToken = jwt.sign(tokenUser.data, config.tokenSecret, {
-                    // expiresIn: 86400 // expires in 24 hours
-                    expiresIn: 60 // expires in 24 hours
+                    expiresIn: 86400 // expires in 24 hours
         });
         res.json(tokenUser)
     })
