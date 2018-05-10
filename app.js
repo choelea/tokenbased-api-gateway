@@ -4,10 +4,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-const jwt    = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
+const config = require('./config')
 var test = require('./routes/test');
 var auth = require('./routes/auth');
-var app = express();
+const proxy = require('./routes/proxy')
+const app = express();
 
 
 app.use(logger('dev'));
@@ -15,39 +17,32 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/auth', auth);
-
-app.use((req, res, next) => {
+app.use((req, res, next) => { // Just do one thing: check token in the header; if exist, decode it and bind the userData on to request
   const chemToken = req.headers['chem-token'];
-	if (chemToken) {
-    jwt.verify(chemToken, 'secret-which-should-be-configured-in-another-file', function(err, userData) {		
-      console.log(err)	
-			if (err) {
-				return res.json({ success: false, message: 'Failed to authenticate token.' });		
-			} else {
-				req.user = userData;	
-				next();
-			}
-		});
-
-	} else {
-    return res.status(403).send({ 
-			success: false, 
-			message: 'No token provided.'
-		});		
-	}	
+  if (chemToken) {
+    jwt.verify(chemToken, config.tokenSecret, function (err, userData) {
+      if (!err) {
+        req.user = userData;
+        next();
+      }
+    });
+  }
+  next()
 });
 
+
 app.use('/test', test);
+app.use('/api', proxy);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   console.log(err)
   // set locals, only providing error in development
   res.locals.message = err.message;
