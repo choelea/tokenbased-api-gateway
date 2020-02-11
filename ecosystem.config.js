@@ -10,23 +10,23 @@ module.exports = {
       instances: 0,
       exec_mode: 'cluster',
       env: {
-        PORT: 4011,
+        // PORT: 4011,
         LOGLEVEL: 'info',
       },
       env_dev: {
-        PORT: 4011,
+        // PORT: 4011,
         NODE_ENV: 'dev',
       },
       env_int: {
-        PORT: 4011,
+        // PORT: 4011,
         NODE_ENV: 'int',
       },
       env_pre: {
-        PORT: 4011,
+        // PORT: 4011,
         NODE_ENV: 'pre',
       },
       env_prd: {
-        PORT: 4011,
+        // PORT: 4011,
         NODE_ENV: 'prd',
       },
     },
