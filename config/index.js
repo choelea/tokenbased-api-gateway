@@ -1,18 +1,46 @@
-const dev = require('./deployment/dev')
-const int = require('./deployment/int')
-const pre = require('./deployment/pre')
-const prd = require('./deployment/prd')
-const env = {
-  dev,
-  int,
-  pre,
-  prd,
-}
-// TODO: ensure the NODE_ENV must equal to short name defined above
-const activeEnv = env[process.env.NODE_ENV || 'dev']
+var path = require('path');
+var fs = require('fs')
 const config = {
-  resourceServer: activeEnv.resourceServer,
-  tokenSecret: 'jiushu2018!!@#$$', // TODO it's better to read from disk instead of configure into source code in production
+  userInfoUrl: 'http://localhost:4001/authenticate',
+  tokenSecret: 'jiushu2020!!@#$$', // TODO it's better to read from disk instead of configure into source code in production
+  resources:[
+    {
+      prefix:"/users", // Will be trimed when proxy to backend
+      stripPrefix:false,
+      endpoint:"http://localhost:4001",
+      isAuthenticationNeeded:false,
+    },
+    {
+      prefix:"/oapi",
+      stripPrefix:true,
+      endpoint:"http://localhost:4002",
+      isAuthenticationNeeded:false,
+    }
+  ]
 }
 
-module.exports = config
+function loadConfig () {
+  const sdkConfigPath = '/usr/config/tokenbased-api-gateway.json'
+  try {
+    const stats = fs.statSync(sdkConfigPath)
+
+    if (!stats.isFile()) {
+      console.log(`${sdkConfigPath} 不存在，将使用 config.js 中的配置`)
+      return {}
+    }
+  } catch (e) {
+    console.log('cannot find the give file:' + sdkConfigPath)
+    return {}
+  }
+  // 返回配置信息
+  try {
+    const content = fs.readFileSync(sdkConfigPath, 'utf8')
+    return JSON.parse(content)
+  } catch (e) {
+    // 如果配置读取错误或者 JSON 解析错误，则输出空配置项
+    console.log(`${sdkConfigPath} 解析错误，不是 JSON 字符串`)
+    return {}
+  }
+}
+// Exports
+module.exports = Object.assign(config, loadConfig());

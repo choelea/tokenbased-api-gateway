@@ -9,19 +9,26 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 router.post('/authenticate', function(req, res) {
-  const email = req.body.email;
+  const username = req.body.username;
   const password = req.body.password;
-  request(`${config.resourceServer}/group-buying/users/login?userEmail=${email}&password=${password}`)
-    .then(function (resData) {
-        const tokenUser = JSON.parse(resData)        
-        tokenUser.chemToken = jwt.sign(tokenUser.data, config.tokenSecret, {
+  request({
+      method: 'POST',
+      uri: config.userInfoUrl,
+      body: { username,password },
+      json: true
+    }).then(function (resData) { 
+        var jwtToken = jwt.sign(resData, config.tokenSecret, {
                     expiresIn: 86400 // expires in 24 hours
         });
-        res.json(tokenUser)
-    })
-    .catch(function (err) {
-        console.log(err)
-        res.json(err)
+        res.json({useInfo:resData, token:jwtToken});
+    }).catch(function (err) {
+        var errorMsg = {"msg":"Authentication failed, please check if username/passowrd is correct."}
+        try{
+          if(err.error)  errorMsg = JSON.parse(err.error);
+        }catch(e){
+          console.log(e);
+        }
+        res.status(err.statusCode || 400).json(errorMsg);
     });
 });
 

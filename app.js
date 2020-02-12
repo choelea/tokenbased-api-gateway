@@ -8,7 +8,8 @@ const jwt = require('jsonwebtoken');
 const config = require('./config')
 var test = require('./routes/test');
 var auth = require('./routes/auth');
-const proxy = require('./routes/proxy')
+const proxy = require('express-http-proxy')
+// const proxy = require('./routes/proxy')
 const app = express();
 
 
@@ -31,9 +32,34 @@ app.use((req, res, next) => { // Just do one thing: check token in the header; i
   }  
 });
 
+const { isAuthenticated } = require('./middlewares/authenticator')
+// app.use('/uapi', proxy('http://localhost:4001'))
+if(config.resources){
+  config.resources.forEach(element => {
+    var myProxy = proxy(element.endpoint, {
+      proxyReqPathResolver: (req) => {
+        const path = req.originalUrl;
+        if(element.stripPrefix){
+          return path.replace(element.prefix, '');
+        }else{
+          return path;
+        }        
+      },
+      proxyReqOptDecorator: (proxyReqOpts, srcReq) => {
+        if(srcReq.user){
+          proxyReqOpts.headers['userInfo'] = srcReq.user
+        }        
+        return proxyReqOpts
+      },
+    });
+    if(element.isAuthenticationNeeded){
+      app.use(element.prefix, isAuthenticated, myProxy);
+    }else{
+      app.use(element.prefix, myProxy);
+    }
+  });
+}
 
-app.use('/test', test);
-app.use('/api', proxy);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

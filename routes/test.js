@@ -3,8 +3,8 @@ var router = express.Router();
 
 
 router.get('/', function(req, res, next) {
-  console.log(req.user);
-  res.json(req.user);
+  var msg = "This is a test";
+  res.json({msg, user:req.user});
 });
 
 module.exports = router;
