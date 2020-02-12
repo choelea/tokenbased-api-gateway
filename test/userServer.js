@@ -1,13 +1,11 @@
-var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
 
-var express = require('express');
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/users/0', function (req, res) {
-    response = {
+    var response = {
        first_name:'Joe',
        last_name:'Li'
    };

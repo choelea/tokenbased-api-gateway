@@ -5,9 +5,6 @@ const jwt    = require('jsonwebtoken');
 const config = require('../config/index');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
 router.post('/authenticate', function(req, res) {
   const username = req.body.username;
   const password = req.body.password;

@@ -1,9 +1,8 @@
 #!/usr/bin/env node
-
+/* eslint-disable no-undef */
 /**
  * Module dependencies.
  */
-
 var app = require('../app');
 var debug = require('debug')('tokenbased-api-gateway:server');
 var http = require('http');

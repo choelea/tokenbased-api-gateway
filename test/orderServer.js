@@ -1,10 +1,7 @@
-var http = require('http');
-var express = require('express');
-
 var express = require('express');
 var app = express();
 app.get('/orders/202002100000', function (req, res) {
-    response = {
+    var response = {
        orderNo:'202002100000',
        amount:'100'
    };

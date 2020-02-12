@@ -1,4 +1,3 @@
-var path = require('path');
 var fs = require('fs')
 const config = {
   userInfoUrl: 'http://localhost:4001/authenticate',

@@ -1,12 +1,8 @@
 var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const config = require('./config')
-var test = require('./routes/test');
 var auth = require('./routes/auth');
 const proxy = require('express-http-proxy')
 // const proxy = require('./routes/proxy')
@@ -69,6 +65,7 @@ app.use(function (req, res, next) {
 });
 
 // error handler
+// eslint-disable-next-line no-unused-vars
 app.use(function (err, req, res, next) {
   console.log(err)
   // set locals, only providing error in development
