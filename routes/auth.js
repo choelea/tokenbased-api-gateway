@@ -15,7 +15,7 @@ router.post('/authenticate', function(req, res) {
       json: true
     }).then(function (resData) { 
         var jwtToken = jwt.sign(resData, config.tokenSecret, {
-                    expiresIn: 86400 // expires in 24 hours
+                    expiresIn: config.jwtExpire
         });
         res.json({useInfo:resData, token:jwtToken});
     }).catch(function (err) {

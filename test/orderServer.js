@@ -1,8 +1,8 @@
 var express = require('express');
 var app = express();
-app.get('/orders/202002100000', function (req, res) {
+app.get('/orders/:orderNo', function (req, res) {
     var response = {
-       orderNo:'202002100000',
+       orderNo:req.params.orderNo,
        amount:'100'
    };
    console.log(response);

@@ -1,6 +1,7 @@
 var fs = require('fs')
 const config = {
   userInfoUrl: 'http://localhost:4001/authenticate',
+  jwtExpire: 86400, // expires in 24 hours
   tokenSecret: 'jiushu2020!!@#$$', // TODO it's better to read from disk instead of configure into source code in production
   resources:[
     {
@@ -13,7 +14,7 @@ const config = {
       prefix:"/oapi",
       stripPrefix:true,
       endpoint:"http://localhost:4002",
-      isAuthenticationNeeded:false,
+      isAuthenticationNeeded:true,
     }
   ]
 }

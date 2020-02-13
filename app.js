@@ -15,10 +15,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/auth', auth);
 app.use((req, res, next) => { // Just do one thing: check token in the header; if exist, decode it and bind the userData on to request
-  const chemToken = req.headers['chem-token'];
-  if (chemToken) {
-    jwt.verify(chemToken, config.tokenSecret, function (err, userData) {
+  const token = req.headers['xtoken'];
+  console.log(token)
+  if (token) {
+    jwt.verify(token, config.tokenSecret, function (err, userData) {
       if (!err) {
+        console.log(userData)
         req.user = userData;
       }
       next();
