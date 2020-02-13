@@ -1,0 +1,19 @@
+{
+    "authenticateUrl": "http://localhost:4001/authenticate",
+    "jwtExpire": 86400, 
+    "tokenSecret": "jiushu2020!!@#$$", 
+    "resources":[
+      {
+        "prefix":"/users",
+        "stripPrefix":false,
+        "endpoint":"http://localhost:4001",
+        "isAuthenticationNeeded":false
+      },
+      {
+        "prefix":"/oapi",
+        "stripPrefix":true,
+        "endpoint":"http://localhost:4002",
+        "isAuthenticationNeeded":true
+      }
+    ]
+  }

@@ -10,7 +10,7 @@ router.post('/authenticate', function(req, res) {
   const password = req.body.password;
   request({
       method: 'POST',
-      uri: config.userInfoUrl,
+      uri: config.authenticateUrl,
       body: { username,password },
       json: true
     }).then(function (resData) { 
