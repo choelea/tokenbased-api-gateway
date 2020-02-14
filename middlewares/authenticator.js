@@ -4,4 +4,4 @@ module.exports.isAuthenticated = (req, res, next) => {
     } else {
         next();      
     }
-  }
+}
