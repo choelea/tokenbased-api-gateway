@@ -1,9 +1,9 @@
 var express = require('express');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-const jwt = require('jsonwebtoken');
 const config = require('./config')
 var auth = require('./routes/auth');
+var tokenStore = require('./storeStrategy');
 const proxy = require('express-http-proxy')
 // const proxy = require('./routes/proxy')
 const app = express();
@@ -14,20 +14,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/auth', auth);
-app.use((req, res, next) => { // Just do one thing: check token in the header; if exist, decode it and bind the userData on to request
+app.use(function (req, res, next) {
   const token = req.headers['xtoken'];
-  console.log(token)
   if (token) {
-    jwt.verify(token, config.tokenSecret, function (err, userData) {
+    tokenStore.verify(token, function (err, userData) {
       if (!err) {
-        console.log(userData)
-        req.user = userData;
+          // console.log(userData)
+          req.user = userData;
       }
       next();
     });
-  }else{
-    next()
-  }  
+  } else {
+      next();
+  } 
 });
 
 const { isAuthenticated } = require('./middlewares/authenticator')

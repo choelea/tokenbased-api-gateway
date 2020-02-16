@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const request = require('request-promise');
-const jwt    = require('jsonwebtoken');
 const config = require('../config/index');
+var tokenStore = require('../storeStrategy');
 
 /* GET users listing. */
 router.post('/authenticate', function(req, res) {
@@ -14,10 +14,9 @@ router.post('/authenticate', function(req, res) {
       body: { username,password },
       json: true
     }).then(function (resData) { 
-        var jwtToken = jwt.sign(resData, config.tokenSecret, {
-                    expiresIn: config.jwtExpire
-        });
-        res.json({useInfo:resData, token:jwtToken});
+        var token = tokenStore.create(resData);        
+        console.log(`Got token:${token}`)
+        res.json({useInfo:resData, token});
     }).catch(function (err) {
         var errorMsg = {"msg":"Authentication failed, please check if username/passowrd is correct."}
         try{

@@ -18,7 +18,7 @@ docker pull registry.cn-qingdao.aliyuncs.com/jiu-shu/api-proxy:1.0
 ```
 {
     "authenticateUrl": "http://10.3.69.10:4001/authenticate",
-    "jwtExpire": 86400, 
+    "tokenExpire": 86400, 
     "tokenSecret": "jiushu2020!!@#$$", 
     "resources":[
       {
@@ -85,7 +85,7 @@ header带上xtoken 值为登录获取的token。
 ```
 > 返回需要的用户的信息的JSON格式即可，对属性没有任何要求
 
-### jwtExpire
+### tokenExpire
 jwt token的过期时间
 
 ### tokenSecret

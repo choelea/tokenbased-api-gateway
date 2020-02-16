@@ -1,7 +1,8 @@
 var fs = require('fs')
 const config = {
   authenticateUrl: 'http://localhost:4001/authenticate',
-  jwtExpire: 86400, // expires in 24 hours
+  tokenExpire: 86400, // expires in 24 hours
+  tokenStrategy:'mongodb',//jwt, mongodb
   tokenSecret: 'jiushu2020!!@#$$', // TODO it's better to read from disk instead of configure into source code in production
   resources:[
     {
@@ -16,7 +17,11 @@ const config = {
       endpoint:"http://localhost:4002",
       isAuthenticationNeeded:true,
     }
-  ]
+  ],
+  mongo:{
+    url:'mongodb://localhost:27017/test',
+    dbName:'test'
+  }
 }
 
 function loadConfig () {
