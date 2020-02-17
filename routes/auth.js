@@ -14,10 +14,11 @@ router.post('/authenticate', function(req, res) {
       body: { username,password },
       json: true
     }).then(function (resData) { 
-        var token = tokenStore.create(resData);        
-        console.log(`Got token:${token}`)
-        res.json({useInfo:resData, token});
+        return tokenStore.newToken(resData);
+    }).then(function (obj){ 
+      res.json(obj);
     }).catch(function (err) {
+        // console.log(err)
         var errorMsg = {"msg":"Authentication failed, please check if username/passowrd is correct."}
         try{
           if(err.error)  errorMsg = JSON.parse(err.error);
