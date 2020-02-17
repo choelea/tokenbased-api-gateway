@@ -2,7 +2,7 @@ var fs = require('fs')
 const config = {
   authenticateUrl: 'http://localhost:4001/authenticate',
   tokenExpire: 86400, // expires in 24 hours
-  tokenStrategy:'jwt',//jwt, mongodb
+  tokenStrategy:'jwt',//jwt, mongo
   tokenSecret: 'jiushu2020!!@#$$', // TODO it's better to read from disk instead of configure into source code in production
   resources:[
     {

@@ -15,5 +15,9 @@
         "endpoint":"http://localhost:4002",
         "isAuthenticationNeeded":true
       }
-    ]
+    ],
+    "mongo":{
+      "url":"mongodb://localhost:27017",
+      "dbName":"apiproxy"
+    }
   }
