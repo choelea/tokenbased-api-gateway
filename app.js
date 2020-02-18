@@ -1,5 +1,6 @@
 var express = require('express');
 var logger = require('morgan');
+var {Buffer} = require('buffer');
 var bodyParser = require('body-parser');
 const config = require('./config')
 var auth = require('./routes/auth');
@@ -43,7 +44,8 @@ if(config.resources){
       },
       proxyReqOptDecorator: (proxyReqOpts, srcReq) => {
         if(srcReq.user){
-          proxyReqOpts.headers['userInfo'] = srcReq.user
+          let buff = Buffer.from(JSON.stringify(srcReq.user), 'utf-8'); 
+          proxyReqOpts.headers['userInfo'] = buff.toString('base64');
         }        
         return proxyReqOpts
       },

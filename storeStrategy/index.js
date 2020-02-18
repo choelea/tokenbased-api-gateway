@@ -1,5 +1,6 @@
 const config = require('../config/index');
 
+
 var store;
 if(config.tokenStrategy=='jwt'){
     const JWTStore = require('./jwt');

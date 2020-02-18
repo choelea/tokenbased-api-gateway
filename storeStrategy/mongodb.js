@@ -6,15 +6,15 @@ const config  = require('../config');
  * { "_id" : ObjectId("5063114bd386d8fadbd6b004"), "timer":1,"userInfo":{}}
  */
 class MongoStore {    
-    constructor(options) {
+    constructor(config) {
         const newConnectionCallback = (err, client) => {
             if (err) {
               this.connectionFailed(err)
             } else {
-              this.handleNewConnectionAsync(client, options.dbName,collectionName)
+              this.handleNewConnectionAsync(client, config.dbName,collectionName)
             }
         }
-        MongoClient.connect(options.url,  newConnectionCallback);
+        MongoClient.connect(config.url, config.options, config,newConnectionCallback);
     }
     connectionFailed(err) {
         this.changeState('disconnected');
@@ -64,8 +64,8 @@ class MongoStore {
     verify(token, callback) {
         this.collection.findOneAndUpdate({ _id:ObjectID(token) }, { $set: { expires: new Date() } }, {}, function (err, result) {
             if (!err && result.value) {
-                console.log(result);
-                callback(err,result);
+                // console.log(result);
+                callback(err,result.value.userInfo);
             }else{
                 callback(err);
             }

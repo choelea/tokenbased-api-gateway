@@ -1,8 +1,8 @@
 var fs = require('fs')
 const config = {
   authenticateUrl: 'http://localhost:4001/authenticate',
-  // tokenExpire: 86400, // expires in 24 hours
-  tokenExpire: 3600, // expires in 1 hours; this could be more reasonable when use mongodb and the token is rolling
+  tokenExpire: 86400, // expires in 24 hours
+  // tokenExpire: 3600, // expires in 1 hours; this could be more reasonable when use mongodb and the token is rolling
   tokenStrategy:'jwt',//jwt, mongo
   tokenSecret: 'jiushu2020!!@#$$', // TODO it's better to read from disk instead of configure into source code in production
   resources:[
@@ -26,8 +26,8 @@ const config = {
 }
 
 function loadConfig () {
-  // const sdkConfigPath = '/usr/config/tokenbased-api-gateway.json';
-  const sdkConfigPath = '/Users/joe/tmp/tokenbased-api-gateway.json';
+  const sdkConfigPath = '/usr/config/tokenbased-api-gateway.json';
+  // const sdkConfigPath = '/Users/joe/tmp/tokenbased-api-gateway.json';
   try {
     const stats = fs.statSync(sdkConfigPath)
 
