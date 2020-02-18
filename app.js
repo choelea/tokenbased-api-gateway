@@ -19,7 +19,6 @@ app.use(function (req, res, next) {
   if (token) {
     tokenStore.verify(token, function (err, userData) {
       if (!err) {
-          // console.log(userData)
           req.user = userData;
       }
       next();

@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
+var ObjectID = require('mongodb').ObjectID
 const collectionName = 'apiproxytoken';
 const config  = require('../config');
 /**
@@ -34,7 +35,7 @@ class MongoStore {
     changeState(newState) {
         if (newState !== this.state) {
             this.state = newState
-            this.emit(newState)
+            // this.emit(newState)
         }
     }
     setAutoRemoveAsync() {
@@ -47,7 +48,7 @@ class MongoStore {
         var mongoCollection = this.collection;
         return new Promise(
             function (resolve, reject) {
-                mongoCollection.insertOne({ timer: new Date(), userInfo },function(err,result){
+                mongoCollection.insertOne({ expires: new Date(), userInfo },function(err,result){
                     if(!err){
                         resolve({token:result.insertedId,userInfo});
                     }else{
@@ -57,14 +58,13 @@ class MongoStore {
             }
         )
     }
-    
     create(userInfo) {        
         return this.collection.insertOne({ timer: new Date(), userInfo });
     }
     verify(token, callback) {
-        this.collection.findOneAndUpdate({ _id: token }, { $set: { expires: new Date() } }, {}, function (err, result) {
-            if (!err) {
-                console.log(result)
+        this.collection.findOneAndUpdate({ _id:ObjectID(token) }, { $set: { expires: new Date() } }, {}, function (err, result) {
+            if (!err && result.value) {
+                console.log(result);
                 callback(err,result);
             }else{
                 callback(err);

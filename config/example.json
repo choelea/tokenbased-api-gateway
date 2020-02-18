@@ -1,5 +1,6 @@
 {
     "authenticateUrl": "http://localhost:4001/authenticate",
+    "tokenStrategy":"jwt",
     "tokenExpire": 86400, 
     "tokenSecret": "jiushu2020!!@#$$", 
     "resources":[
