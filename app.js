@@ -16,16 +16,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/auth', auth);
 app.use(function (req, res, next) {
-  const token = req.headers['xtoken'];
+  const token = req.headers[config.tokenName];
   if (token) {
     tokenStore.verify(token, function (err, userData) {
       if (!err) {
-          req.user = userData;
+        req.user = userData;
       }
       next();
     });
   } else {
-      next();
+    next();
   } 
 });
 

@@ -8,6 +8,7 @@ var tokenStore = require('../storeStrategy');
 router.post('/authenticate', function(req, res) {
   const username = req.body.username;
   const password = req.body.password;
+  
   request({
       method: 'POST',
       uri: config.authenticateUrl,
@@ -18,7 +19,7 @@ router.post('/authenticate', function(req, res) {
     }).then(function (obj){ 
       res.json(obj);
     }).catch(function (err) {
-        // console.log(err)
+        console.log(err)
         var errorMsg = {"msg":"Authentication failed, please check if username/passowrd is correct."}
         try{
           if(err.error)  errorMsg = JSON.parse(err.error);
@@ -27,6 +28,22 @@ router.post('/authenticate', function(req, res) {
         }
         res.status(err.statusCode || 400).json(errorMsg);
     });
+});
+
+router.get('/logout', function(req, res) {
+  const token = req.headers[config.tokenName];
+  if(token){
+    tokenStore.removeToken(token)
+    .then(function (){ 
+        res.json({msg:'succes'});
+    }).catch(function (err) {
+        console.log(err);
+        res.json({msg:'succes'});
+    });
+  }else{
+    res.json({msg:'succes'});
+  }
+  
 });
 
 module.exports = router;

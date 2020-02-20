@@ -15,6 +15,7 @@ app.get('/users/0', function (req, res) {
 
 app.post('/authenticate', function (req, res) {
     console.log(req.body)
+    console.log(req.body.username == 'jiu-shu')
     if(req.body.username == 'jiu-shu' && req.body.password=='123456'){
         res.json({
             username:'jiu-shu',

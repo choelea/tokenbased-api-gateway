@@ -43,6 +43,9 @@ class MongoStore {
             { expires: 1 },{ expireAfterSeconds: config.tokenExpire }
         )
     }
+    removeToken(token) {
+        return this.collection.deleteOne({ _id:ObjectID(token) });
+    }
     
     newToken(userInfo){
         var mongoCollection = this.collection;

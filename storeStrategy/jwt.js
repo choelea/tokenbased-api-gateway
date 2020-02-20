@@ -12,6 +12,13 @@ class JWTStore {
             }
         )
     }
+    removeToken(token) {// Nothing to Do for JWT
+        return new Promise(
+            function (resolve) {
+                resolve({token});
+            }
+        )
+    }
     create(userInfo){
         return jwt.sign(userInfo, config.tokenSecret, {
             expiresIn: config.tokenExpire
