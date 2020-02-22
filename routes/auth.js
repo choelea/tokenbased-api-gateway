@@ -3,7 +3,7 @@ const router = express.Router();
 const request = require('request-promise');
 const config = require('../config/index');
 var tokenStore = require('../storeStrategy');
-
+var LOG = require('../utils/logger')(__filename)
 /* GET users listing. */
 router.post('/authenticate', function(req, res) {
   const username = req.body.username;
@@ -19,12 +19,12 @@ router.post('/authenticate', function(req, res) {
     }).then(function (obj){ 
       res.json(obj);
     }).catch(function (err) {
-        console.log(err)
+        LOG.error(err)
         var errorMsg = {"msg":"Authentication failed, please check if username/passowrd is correct."}
         try{
           if(err.error)  errorMsg = JSON.parse(err.error);
         }catch(e){
-          console.log(e);
+          LOG.error(e);
         }
         res.status(err.statusCode || 400).json(errorMsg);
     });
@@ -37,7 +37,7 @@ router.get('/logout', function(req, res) {
     .then(function (){ 
         res.json({msg:'succes'});
     }).catch(function (err) {
-        console.log(err);
+        LOG.error(err);
         res.json({msg:'succes'});
     });
   }else{

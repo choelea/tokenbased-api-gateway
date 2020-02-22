@@ -13,12 +13,14 @@
     "express-http-proxy": "^1.2.0",
     "hbs": "~4.0.1",
     "jsonwebtoken": "^8.2.1",
+    "mime": ">=1.4.1",
     "mongojs": "^3.1.0",
     "morgan": "~1.9.0",
     "request": "^2.85.0",
     "request-promise": "^4.2.2",
     "serve-favicon": "~2.4.5",
-    "mime": ">=1.4.1"
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^4.4.2"
   },
   "devDependencies": {
     "eslint": "^6.8.0",

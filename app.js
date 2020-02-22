@@ -5,8 +5,8 @@ var bodyParser = require('body-parser');
 const config = require('./config')
 var auth = require('./routes/auth');
 var tokenStore = require('./storeStrategy');
-const proxy = require('express-http-proxy')
-// const proxy = require('./routes/proxy')
+const proxy = require('express-http-proxy');
+const LOG = require('./utils/logger');
 const app = express();
 
 
@@ -69,7 +69,7 @@ app.use(function (req, res, next) {
 // error handler
 // eslint-disable-next-line no-unused-vars
 app.use(function (err, req, res, next) {
-  console.log(err)
+  LOG.error(err);
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

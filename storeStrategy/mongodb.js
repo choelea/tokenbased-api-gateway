@@ -2,6 +2,7 @@ const MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID
 const collectionName = 'apiproxytoken';
 const config  = require('../config');
+const LOG = require('../utils/logger')(__filename)
 /**
  * { "_id" : ObjectId("5063114bd386d8fadbd6b004"), "timer":1,"userInfo":{}}
  */
@@ -28,7 +29,7 @@ class MongoStore {
           .then(() => this.changeState('connected'))
           .catch(err => {
               if(err.code!==85){
-                  console.log(err)
+                LOG.error(err)
               }
           })
     }
@@ -67,7 +68,6 @@ class MongoStore {
     verify(token, callback) {
         this.collection.findOneAndUpdate({ _id:ObjectID(token) }, { $set: { expires: new Date() } }, {}, function (err, result) {
             if (!err && result.value) {
-                // console.log(result);
                 callback(err,result.value.userInfo);
             }else{
                 callback(err);

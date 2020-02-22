@@ -1,4 +1,8 @@
 var fs = require('fs')
+var LOG = require('../utils/logger')(__filename)
+var path = require("path");
+
+
 const config = {
   authenticateUrl: 'http://localhost:4001/authenticate',
   tokenName:'xtoken',
@@ -30,17 +34,17 @@ const config = {
 }
 
 function loadConfig () {
-  const sdkConfigPath = '/usr/config/tokenbased-api-gateway.json'; 
-  // const sdkConfigPath = '/Users/joe/tmp/tokenbased-api-gateway.json';
+  // eslint-disable-next-line no-undef
+  const sdkConfigPath = path.resolve(__dirname,'../../apiproxy-config/tokenbased-api-gateway.json',);
   try {
     const stats = fs.statSync(sdkConfigPath)
 
     if (!stats.isFile()) {
-      console.log(`${sdkConfigPath} 不存在，将使用 config.js 中的配置`)
+      LOG.warn(`${sdkConfigPath} 不存在，将使用 config.js 中的配置`)
       return {}
     }
   } catch (e) {
-    console.log('cannot find the give file:' + sdkConfigPath)
+    LOG.warn('cannot find the give file:' + sdkConfigPath)
     return {}
   }
   // 返回配置信息
@@ -49,7 +53,7 @@ function loadConfig () {
     return JSON.parse(content)
   } catch (e) {
     // 如果配置读取错误或者 JSON 解析错误，则输出空配置项
-    console.log(`${sdkConfigPath} 解析错误，不是 JSON 字符串`)
+    LOG.error(`${sdkConfigPath} 解析错误，不是 JSON 字符串`)
     return {}
   }
 }
