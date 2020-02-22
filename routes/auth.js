@@ -20,6 +20,7 @@ router.post('/authenticate', function(req, res) {
     }).then(function (obj){ 
       res.json(obj);
     }).catch(function (err) {
+        console.log('Joe testing...')
         LOG.error(err)
         var errorMsg = {"msg":"Authentication failed, please check if username/passowrd is correct."}
         try{

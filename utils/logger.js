@@ -3,14 +3,14 @@ require('winston-daily-rotate-file')
 const fs = require('fs')
 var path = require("path");
 // eslint-disable-next-line no-undef
-var logDir = path.resolve(__dirname, '../../apiproxy-logs');
+var logDir = path.resolve('/var/log/apiproxy');
 let transport;
 // eslint-disable-next-line no-undef
 if (process.env.NODE_ENV == 'production') {
     if (!fs.existsSync(logDir)) fs.mkdirSync(logDir)
     transport = new (winston.transports.DailyRotateFile)({
-        filename: `${logDir}/apiproxy-%DATE%.log`,
-        datePattern: 'yyyy-MM-dd',
+        filename: `${logDir}/app-%DATE%.log`,
+        datePattern: 'YYYY-MM-DD',
         maxFiles: '14d',
         // eslint-disable-next-line no-undef
         level: process.env.LOGLEVEL || 'info',

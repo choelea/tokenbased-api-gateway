@@ -1,7 +1,6 @@
 var fs = require('fs')
 // eslint-disable-next-line no-undef
 var LOG = require('../utils/logger')(__filename)
-var path = require("path");
 
 
 const config = {
@@ -35,8 +34,7 @@ const config = {
 }
 
 function loadConfig () {
-  // eslint-disable-next-line no-undef
-  const sdkConfigPath = path.resolve(__dirname,'../../apiproxy-config/tokenbased-api-gateway.json',);
+  const sdkConfigPath = '/home/apiproxy/config.json';
   try {
     const stats = fs.statSync(sdkConfigPath)
 
