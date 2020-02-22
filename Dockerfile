@@ -16,7 +16,7 @@ RUN npm install pm2 -g
 
 # Bundle app source
 COPY . .
-
+ENV NODE_ENV production
 EXPOSE 3000
 CMD ["pm2-runtime", "./bin/www"]
 #CMD [ "node", "./bin/www" ]

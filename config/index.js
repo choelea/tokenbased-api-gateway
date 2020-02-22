@@ -1,4 +1,5 @@
 var fs = require('fs')
+// eslint-disable-next-line no-undef
 var LOG = require('../utils/logger')(__filename)
 var path = require("path");
 

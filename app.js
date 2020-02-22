@@ -6,7 +6,8 @@ const config = require('./config')
 var auth = require('./routes/auth');
 var tokenStore = require('./storeStrategy');
 const proxy = require('express-http-proxy');
-const LOG = require('./utils/logger');
+// eslint-disable-next-line no-undef
+const LOG = require('./utils/logger')(__filename);
 const app = express();
 
 

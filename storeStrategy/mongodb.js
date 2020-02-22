@@ -2,6 +2,7 @@ const MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID
 const collectionName = 'apiproxytoken';
 const config  = require('../config');
+// eslint-disable-next-line no-undef
 const LOG = require('../utils/logger')(__filename)
 /**
  * { "_id" : ObjectId("5063114bd386d8fadbd6b004"), "timer":1,"userInfo":{}}

@@ -3,6 +3,7 @@ const router = express.Router();
 const request = require('request-promise');
 const config = require('../config/index');
 var tokenStore = require('../storeStrategy');
+// eslint-disable-next-line no-undef
 var LOG = require('../utils/logger')(__filename)
 /* GET users listing. */
 router.post('/authenticate', function(req, res) {
