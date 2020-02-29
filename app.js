@@ -30,6 +30,14 @@ app.use(function (req, res, next) {
   } 
 });
 
+app.get('/currentUser', function (req, res) {
+  if(req.user){
+    res.json(req.user);
+  }else{
+    res.status(401).json({msg:"Not Authenticated"});
+  }
+  
+})
 const { isAuthenticated } = require('./middlewares/authenticator')
 // app.use('/uapi', proxy('http://localhost:4001'))
 if(config.resources){
