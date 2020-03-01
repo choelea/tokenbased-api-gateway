@@ -17,17 +17,18 @@ router.post('/authenticate', function(req, res) {
       json: true
     }).then(function (resData) { 
         return tokenStore.newToken(resData);
-    }).then(function (obj){ 
-      res.json(obj);
+    }).then(function (obj){
+        res.json(obj);
     }).catch(function (err) {
+        LOG.error(`------Login Failed------URL:${config.authenticateUrl}    ${username}/${password}`)
         LOG.error(err)
-        var errorMsg = {"msg":"Authentication failed, please check if username/passowrd is correct."}
+        // var errorMsg = {"msg":"登录失败，用户名或者密码错误."}
         try{
-          if(err.error)  errorMsg = JSON.parse(err.error);
+          res.status(err.statusCode || 400).json(err.error);
         }catch(e){
           LOG.error(e);
+          throw e;
         }
-        res.status(err.statusCode || 400).json(errorMsg);
     });
 });
 
