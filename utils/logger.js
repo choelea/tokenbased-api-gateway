@@ -1,5 +1,5 @@
 const winston = require('winston')
-const { combine, timestamp, label, prettyPrint } = winston.format;
+const { combine, timestamp,  json } = winston.format;
 require('winston-daily-rotate-file')
 const fs = require('fs')
 var path = require("path");
@@ -28,7 +28,7 @@ if (process.env.NODE_ENV == 'production') {
 const winstonLogger = winston.createLogger({
     format: combine(
         timestamp(),
-        prettyPrint()
+        json()
       ),
     transports: [
         transport,
