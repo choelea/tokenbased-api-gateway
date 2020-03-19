@@ -1,4 +1,5 @@
 const winston = require('winston')
+const { combine, timestamp, label, prettyPrint } = winston.format;
 require('winston-daily-rotate-file')
 const fs = require('fs')
 var path = require("path");
@@ -12,34 +13,50 @@ if (process.env.NODE_ENV == 'production') {
         filename: `${logDir}/app-%DATE%.log`,
         datePattern: 'YYYY-MM-DD',
         maxFiles: '14d',
+        timestamp:true,
         // eslint-disable-next-line no-undef
         level: process.env.LOGLEVEL || 'info',
-        format: winston.format.simple(),
+        // format: winston.format.simple(),
     })
 } else {
     transport = new (winston.transports.Console)({ 
         timestamp: true, 
         level: 'info',
-        format: winston.format.simple(),
+        // format: winston.format.simple(),
     })
 }
-
 const winstonLogger = winston.createLogger({
+    format: combine(
+        timestamp(),
+        prettyPrint()
+      ),
     transports: [
         transport,
     ],
 })
 
-module.exports = function(fileName) {    
+module.exports = function(file) {
     var myLogger = {
         error: function(text) {
-            winstonLogger.error(fileName + ': ' + text)
+            winstonLogger.log({
+                level: 'error',
+                file,
+                message: text,
+              });
         },
         info: function(text) {
-            winstonLogger.info(fileName + ': ' + text)
+            winstonLogger.log({
+                level: 'info',
+                file,
+                message: text,
+              });
         },
         warn: function(text) {
-            winstonLogger.warn(fileName + ': ' + text)
+            winstonLogger.log({
+                level: 'warn',
+                file,
+                message: text,
+              });
         }
     }
 
