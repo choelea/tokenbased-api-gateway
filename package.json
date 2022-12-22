@@ -12,7 +12,7 @@
     "express": "~4.15.5",
     "express-http-proxy": "^1.2.0",
     "hbs": "~4.0.1",
-    "jsonwebtoken": "^8.2.1",
+    "jsonwebtoken": "^9.0.0",
     "mime": ">=1.4.1",
     "mongojs": "^3.1.0",
     "morgan": "~1.9.0",
